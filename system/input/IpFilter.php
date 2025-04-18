@@ -3,7 +3,7 @@ namespace system\input;
 class IpFilter
 {
     const $bantime = '+7 DAYS';
-    const $bannedattempts = 40;
+    const $bannedattempts = 20;
     public static function loadSession()
     {
         if(function_exists('apcu_enabled')&&apcu_enabled())
@@ -30,9 +30,9 @@ class IpFilter
             $sv[$ip]['attempts']++;
         }
         else $sv[$ip] = ['attempts' => 1,'expires' => strtotime($bantime)];
-        self::saveSession();
+        self::saveSession($sv[$ip]);
     }
-    public function isBlocked(string $ip)
+    public static function isBlocked(string $ip)
     {
         $sv = self::loadSession();
         if(!array_key_exists($sv,$ip))return false;
