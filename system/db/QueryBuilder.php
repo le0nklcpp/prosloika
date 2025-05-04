@@ -214,7 +214,7 @@ class QueryBuilder
      */
     public function exec()
     {
-        $result = $this->db->query($this->queryString,PDO::FETCH_BOTH)->fetchAll();
+        $result = $this->db->query($this->queryString,PDO::FETCH_ASSOC)->fetchAll();
         return (!empty($result))?$result:null;
     }
     /*
