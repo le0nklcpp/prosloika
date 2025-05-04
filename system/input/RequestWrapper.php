@@ -55,13 +55,13 @@ class RequestWrapper
     }
     public function getQueryParam(string $key)
     {
-        return $this->getParam($key,$this->get);
+        return $this->getParam($key,$this->query);
     }
     public function __construct()
     {
         $this->ip = $_SERVER['REMOTE_ADDR'];
         $this->uri = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
-        parse_str($_SERVER['QUERY_STRING'],$this->query);
+        parse_str(parse_url($_SERVER['REQUEST_URI'],PHP_URL_QUERY),$this->query);
         $this->headers = getallheaders();
         if($this->getHeader('Content-Type')=='multipart/form-data')
         {
