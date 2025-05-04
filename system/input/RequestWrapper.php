@@ -60,7 +60,7 @@ class RequestWrapper
     public function __construct()
     {
         $this->ip = $_SERVER['REMOTE_ADDR'];
-        $this->uri = $_SERVER['REQUEST_URI'];
+        $this->uri = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
         parse_str($_SERVER['QUERY_STRING'],$this->query);
         $this->headers = getallheaders();
         if($this->getHeader('Content-Type')=='multipart/form-data')
