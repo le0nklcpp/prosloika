@@ -66,7 +66,7 @@ class Router
             if($iter['uri']==$request->uri&&($iter['method']==$request->method||$request->method=='OPTIONS'))
             {
                 $controller = $iter['class'];
-                if($iter['uri']=='OPTIONS') // I hate CORS
+                if($request->method=='OPTIONS') // I hate CORS
                 {
                     header('HTTP/'.$this->HTTP_VER.' 200 OK');
                     header('Allow:'.$controller::allowed_cors);
