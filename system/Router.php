@@ -63,7 +63,7 @@ class Router
         syslog(LOG_INFO,'URI:'.$request->uri.' Method: '.$request->method);
         foreach($this->routes as $iter)
         {
-            if($iter['uri']==$request->uri&&$iter['method']==$request->method)
+            if($iter['uri']==$request->uri&&($iter['method']==$request->method||$request->method=='OPTIONS'))
             {
                 $controller = $iter['class'];
                 if($iter['uri']=='OPTIONS') // I hate CORS
@@ -72,7 +72,7 @@ class Router
                     header('Allow:'.$controller::allowed_cors);
                     if((in_array('Origin',$request->headers)&&in_array($request->headers['Origin'],$this->cors_origin)))
                     {
-                        header('Access-Control-Allow-Origin:'.$this->cors_origin[$request->headers['Origin']]);
+                        header('Access-Control-Allow-Origin:'.$request->headers['Origin']);
                     }
                     else if(in_array('*',$this->cors_origin))header('Access-Control-Allow-Origin:*');
                     header('Access-Control-Allow-Methods:'.$controller::allowed_cors);
